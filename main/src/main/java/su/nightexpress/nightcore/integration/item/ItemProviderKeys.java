@@ -8,6 +8,8 @@ public final class ItemProviderKeys {
     public static final String BUKKIT           = "vanilla";
     public static final String EXECUTABLE_ITEMS = "executableitems";
     public static final String EXCELLENT_CRATES = "excellent_crates";
+    public static final String EXCELLENT_CRATES_CRATE = "excellentcrates_crate";
+    public static final String EXCELLENT_CRATES_KEY   = "excellentcrates_key";
     public static final String ITEMS_ADDER      = "itemsadder";
     public static final String MMOITEMS         = "mmoitems";
     public static final String NEXO             = "nexo";

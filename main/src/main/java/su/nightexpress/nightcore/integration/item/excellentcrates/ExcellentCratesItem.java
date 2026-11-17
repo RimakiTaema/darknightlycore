@@ -11,13 +11,12 @@ import su.nightexpress.excellentcrates.api.crate.Crate;
 import su.nightexpress.excellentcrates.api.key.CrateKey;
 import su.nightexpress.excellentcrates.api.key.KeysAPI;
 import su.nightexpress.nightcore.integration.item.BaseProviderDataItem;
-import su.nightexpress.nightcore.integration.item.ItemProviderKeys;
 
 @NullMarked
 public class ExcellentCratesItem extends BaseProviderDataItem<ExcellentCratesItemContext> {
 
     public ExcellentCratesItem(ExcellentCratesItemContext context) {
-        super(ItemProviderKeys.EXCELLENT_CRATES, context);
+        super(context.type().getProviderId(), context);
     }
 
     @Override

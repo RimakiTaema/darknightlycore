@@ -26,9 +26,11 @@ import su.nightexpress.nightcore.integration.item.craftengine.CraftEngineItem;
 import su.nightexpress.nightcore.integration.item.craftengine.CraftEngineItemProvider;
 import su.nightexpress.nightcore.integration.item.data.ItemIdData;
 import su.nightexpress.nightcore.integration.item.dummy.DummyItem;
+import su.nightexpress.nightcore.integration.item.excellentcrates.ExcellentCratesCrateProvider;
 import su.nightexpress.nightcore.integration.item.excellentcrates.ExcellentCratesItem;
 import su.nightexpress.nightcore.integration.item.excellentcrates.ExcellentCratesItemProvider;
 import su.nightexpress.nightcore.integration.item.excellentcrates.ExcellentCratesItemType;
+import su.nightexpress.nightcore.integration.item.excellentcrates.ExcellentCratesKeyProvider;
 import su.nightexpress.nightcore.integration.item.excellentcrates.codec.ExcellentCratesItemCodec;
 import su.nightexpress.nightcore.integration.item.executableitems.ExecutableItemsItem;
 import su.nightexpress.nightcore.integration.item.executableitems.ExecutableItemsItemProvider;
@@ -128,7 +130,10 @@ public class CoreManager extends AbstractManager<NightCore> {
             // The item codec reads the type enum through the codec registry, so it must be registered too.
             ConfigCodecs.register(ExcellentCratesItemType.class, ConfigCodecs.forEnum(ExcellentCratesItemType.class));
             ConfigCodecs.register(ExcellentCratesItem.class, ExcellentCratesItemCodec.INSTANCE);
-            this.registerItemProvider(new ExcellentCratesItemProvider(), ExcellentCratesItemCodec.INSTANCE);
+            this.registerItemProvider(new ExcellentCratesCrateProvider(), ExcellentCratesItemCodec.INSTANCE);
+            this.registerItemProvider(new ExcellentCratesKeyProvider(), ExcellentCratesItemCodec.INSTANCE);
+            // Legacy combined id: registered quietly so pre-split saves still load and migrate on write.
+            ItemBridge.get().register(new ExcellentCratesItemProvider(), ExcellentCratesItemCodec.INSTANCE);
         });
     }
 

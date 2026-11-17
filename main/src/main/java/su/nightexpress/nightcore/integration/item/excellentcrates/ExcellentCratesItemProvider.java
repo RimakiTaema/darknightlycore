@@ -5,14 +5,17 @@ import java.util.Optional;
 import org.bukkit.inventory.ItemStack;
 import org.jspecify.annotations.NullMarked;
 
-import su.nightexpress.engine.id.Identifier;
-import su.nightexpress.excellentcrates.api.ExcellentCratesAPI;
-import su.nightexpress.excellentcrates.api.key.KeysAPI;
 import su.nightexpress.nightcore.bridge.item.AdaptedItem;
 import su.nightexpress.nightcore.integration.item.ItemProvider;
 import su.nightexpress.nightcore.integration.item.ItemProviderKeys;
 import su.nightexpress.nightcore.util.Plugins;
 
+/**
+ * Legacy combined provider kept only so products saved before the crate/key split
+ * ({@code Provider: excellent_crates}) still load. Its codec reads the stored type and
+ * produces an item bound to the new crate/key provider, so the next save migrates the id.
+ * It never claims new items; detection is handled by the split providers.
+ */
 @NullMarked
 public class ExcellentCratesItemProvider implements ItemProvider {
 
@@ -28,45 +31,11 @@ public class ExcellentCratesItemProvider implements ItemProvider {
 
     @Override
     public boolean isProducedBy(ItemStack itemStack) {
-        ExcellentCratesAPI api = ExcellentCratesAPIService.resolve();
-        if (api == null) {
-            return false;
-        }
-
-        if (api.getCratesAPI().items().getCrateId(itemStack) != null) {
-            return true;
-        }
-
-        KeysAPI keys = api.getKeysAPI().orElse(null);
-        return keys != null && keys.getItemAPI().getKeyIdFromItem(itemStack) != null;
+        return false;
     }
 
     @Override
     public Optional<AdaptedItem> wrapItem(ItemStack itemStack) {
-        ExcellentCratesAPI api = ExcellentCratesAPIService.resolve();
-        if (api == null) {
-            return Optional.empty();
-        }
-
-        int amount = itemStack.getAmount();
-
-        Identifier crateId = api.getCratesAPI().items().getCrateId(itemStack);
-        if (crateId != null) {
-            ExcellentCratesItemContext context = new ExcellentCratesItemContext(ExcellentCratesItemType.CRATE, crateId,
-                amount);
-            return Optional.of(new ExcellentCratesItem(context));
-        }
-
-        KeysAPI keys = api.getKeysAPI().orElse(null);
-        if (keys != null) {
-            Identifier keyId = keys.getItemAPI().getKeyIdFromItem(itemStack);
-            if (keyId != null) {
-                ExcellentCratesItemContext context = new ExcellentCratesItemContext(ExcellentCratesItemType.KEY, keyId,
-                    amount);
-                return Optional.of(new ExcellentCratesItem(context));
-            }
-        }
-
         return Optional.empty();
     }
 }
