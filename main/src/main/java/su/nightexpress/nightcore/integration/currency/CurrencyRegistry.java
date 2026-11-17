@@ -37,7 +37,8 @@ public class CurrencyRegistry {
     }
 
     public boolean contains(@NonNull String id) {
-        return this.byIdMap.containsKey(LowerCase.INTERNAL.apply(id));
+        return this.byIdMap.containsKey(LowerCase.INTERNAL.apply(id)) ||
+            this.byIdMap.containsKey(LowerCase.INTERNAL.apply(CurrencyId.reroute(id)));
     }
 
     public void forEach(@NonNull Consumer<Currency> consumer) {
@@ -66,7 +67,11 @@ public class CurrencyRegistry {
 
     @Nullable
     public Currency getById(@NonNull String id) {
-        return this.byIdMap.get(LowerCase.INTERNAL.apply(id));
+        Currency currency = this.byIdMap.get(LowerCase.INTERNAL.apply(id));
+        if (currency == null) {
+            currency = this.byIdMap.get(LowerCase.INTERNAL.apply(CurrencyId.reroute(id)));
+        }
+        return currency;
     }
 
     @NonNull

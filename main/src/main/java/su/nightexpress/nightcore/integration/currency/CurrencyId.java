@@ -38,6 +38,9 @@ public class CurrencyId {
         if (oldName.equalsIgnoreCase("xp")) return XP_POINTS;
         if (oldName.equalsIgnoreCase("money")) return VAULT;
         if (oldName.equalsIgnoreCase("economy")) return VAULT;
+        if (oldName.regionMatches(true, 0, COINS_ENGINE_PREFIX, 0, COINS_ENGINE_PREFIX.length())) {
+            return EXCELLENT_ECONOMY_PREFIX + oldName.substring(COINS_ENGINE_PREFIX.length());
+        }
 
         return oldName;
     }

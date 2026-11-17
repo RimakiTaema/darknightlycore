@@ -79,9 +79,7 @@ public class CurrencyManager extends AbstractManager<NightCore> {
         this.addExternalLoader(CurrencyPlugins.COINS_ENGINE, () -> ExcellentEconomyCurrency
             .getCurrencies(CurrencyId::forCoinsEngine).forEach(this::register));
 
-        // Two variants for compatibility.
         this.addExternalLoader(CurrencyPlugins.EXCELLENT_ECONOMY, () -> {
-            ExcellentEconomyCurrency.getCurrencies(CurrencyId::forCoinsEngine).forEach(this::register);
             ExcellentEconomyCurrency.getCurrencies(CurrencyId::forExcellentEconomy).forEach(this::register);
         });
 
