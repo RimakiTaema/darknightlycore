@@ -28,6 +28,7 @@ import su.nightexpress.nightcore.integration.item.data.ItemIdData;
 import su.nightexpress.nightcore.integration.item.dummy.DummyItem;
 import su.nightexpress.nightcore.integration.item.excellentcrates.ExcellentCratesItem;
 import su.nightexpress.nightcore.integration.item.excellentcrates.ExcellentCratesItemProvider;
+import su.nightexpress.nightcore.integration.item.excellentcrates.ExcellentCratesItemType;
 import su.nightexpress.nightcore.integration.item.excellentcrates.codec.ExcellentCratesItemCodec;
 import su.nightexpress.nightcore.integration.item.executableitems.ExecutableItemsItem;
 import su.nightexpress.nightcore.integration.item.executableitems.ExecutableItemsItemProvider;
@@ -124,6 +125,8 @@ public class CoreManager extends AbstractManager<NightCore> {
             CraftEngineItem::new);
 
         Plugins.ifInstalled("ExcellentCrates", () -> {
+            // The item codec reads the type enum through the codec registry, so it must be registered too.
+            ConfigCodecs.register(ExcellentCratesItemType.class, ConfigCodecs.forEnum(ExcellentCratesItemType.class));
             ConfigCodecs.register(ExcellentCratesItem.class, ExcellentCratesItemCodec.INSTANCE);
             this.registerItemProvider(new ExcellentCratesItemProvider(), ExcellentCratesItemCodec.INSTANCE);
         });

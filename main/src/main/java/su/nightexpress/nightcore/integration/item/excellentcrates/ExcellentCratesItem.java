@@ -25,21 +25,21 @@ public class ExcellentCratesItem extends BaseProviderDataItem<ExcellentCratesIte
         return this.data.amount();
     }
 
-    private boolean isCrate(ItemStack itemStack) {
-        ExcellentCratesAPI api = ExcellentCratesAPIService.resolve();
-
-        return api != null && api.getCratesAPI().items().isCrateItem(itemStack);
-    }
-
-    private boolean isKey(ItemStack itemStack) {
-        ExcellentCratesAPI api = ExcellentCratesAPIService.resolve();
-
-        return api != null && api.getKeysAPI().map(keys -> keys.getItemAPI().isKeyItem(itemStack)).orElse(false);
-    }
-
     @Override
     public boolean isChildren(ItemStack itemStack) {
-        return isCrate(itemStack) || isKey(itemStack);
+        ExcellentCratesAPI api = ExcellentCratesAPIService.resolve();
+        if (api == null) {
+            return false;
+        }
+
+        Identifier itemId = this.data.itemId();
+
+        return switch (this.data.type()) {
+            case CRATE -> itemId.equals(api.getCratesAPI().items().getCrateId(itemStack));
+            case KEY -> api.getKeysAPI()
+                .map(keys -> itemId.equals(keys.getItemAPI().getKeyIdFromItem(itemStack)))
+                .orElse(false);
+        };
     }
 
     @Override
