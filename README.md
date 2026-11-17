@@ -1,13 +1,14 @@
 # About
 
-**NightCore** is a lightweight library with a wide range of utilities and tools for faster and more efficient plugin development.
+**DarkNightCore** is a lightweight library with a wide range of utilities and tools for faster and more efficient plugin development.
+With Some Fixes (AI / Human)
 
-This library is required for all [NightExpress](https://www.spigotmc.org/resources/authors/81588/)'s plugins.
+This library is required for all [NightExpress](https://www.spigotmc.org/resources/authors/81588/)'s plugins & ReExcellent Fork 
 
 ## Features
 
 ✅ What exactly is included in these 1.4 MB:
-- **Pure original code** written by a human, not by AI.
+- ~~**Pure original code** written by a human, not by AI.~~ btw AI Made The dedupe currency registry fix so not by ai is false
 - **Server Bridge**, providing simultaneous support for **Spigot**, **Paper** and **Folia**.
 - **Economy Bridge**, providing simultaneous support for economies/currencies from multiple plugins.
 - **Item Bridge**, providing simultaneous support for custom items from multiple plugins.
